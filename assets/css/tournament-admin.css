@@ -1,0 +1,15 @@
+/* Tabletop Events Calendar — Tournaments — wp-admin pairing tool */
+
+#ttrn-admin-root { max-width: 900px; }
+
+.ttrn-admin-msg { color: #C0392B; font-weight: 600; margin-bottom: 12px; min-height: 1.4em; }
+
+.ttrn-admin-panel { margin-bottom: 20px; }
+.ttrn-add-player-form { display: flex; gap: 8px; align-items: center; }
+.ttrn-add-player-form input[type="text"] { min-width: 220px; }
+
+.ttrn-admin-table { margin-bottom: 24px; }
+.ttrn-admin-table td, .ttrn-admin-table th { padding: 8px 10px; }
+.ttrn-dropped { opacity: .5; }
+
+.ttrn-result { max-width: 240px; }

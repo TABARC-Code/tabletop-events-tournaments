@@ -1,0 +1,13 @@
+/* Tabletop Events Calendar — Tournaments — public standings widget */
+
+.ttrn-standings-root { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+.ttrn-standings-root *, .ttrn-standings-root *::before, .ttrn-standings-root *::after { box-sizing: border-box; }
+
+.ttrn-round-heading { font-weight: 700; font-size: 16px; margin: 0 0 10px; }
+.ttrn-standings-heading { margin: 24px 0 10px; }
+
+.ttrn-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+.ttrn-table th, .ttrn-table td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: left; font-size: 14px; }
+.ttrn-table th { font-weight: 700; border-bottom: 2px solid #ddd; }
+
+.ttrn-empty { padding: 16px 0; color: #888; }
