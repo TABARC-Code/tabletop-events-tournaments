@@ -24,6 +24,8 @@ One shortcode:
 
 == Installation ==
 
+If you're grabbing this via GitHub's own "Download ZIP" button, rename the extracted folder to `tabletop-events-tournaments` first — GitHub names it `tabletop-events-tournaments-main`, which WordPress will happily install but won't recognise as the same plugin on your next update. Running `scripts/pack-plugin.sh` (needs `php` and `zip`) builds a zip with the folder already named correctly, ready for Plugins ▸ Add New ▸ Upload Plugin.
+
 1. Install and activate **Tabletop Events Calendar** first.
 2. Upload the `tabletop-events-tournaments` folder to `/wp-content/plugins/` and activate it.
 3. Go to **Events Calendar ▸ Tournaments ▸ Add New**, link it to an event, and set the planned number of rounds.
