@@ -93,14 +93,22 @@ class TTRN_Swiss {
 			$active = array_values( array_filter( $active, function ( $p ) use ( $bye_player_id ) { return $p['id'] !== $bye_player_id; } ) );
 		}
 
-		$tables   = array();
-		$unpaired = $active;
+		$tables       = array();
+		$unpaired     = $active;
+		$extra_byes   = array();
 		while ( count( $unpaired ) > 0 ) {
 			$p1 = array_shift( $unpaired );
 			if ( ! $unpaired ) {
-				// Odd leftover after all the swapping below — pair
-				// with a repeat rather than drop them from the round.
-				$tables[] = array( 'player1' => $p1['id'], 'player2' => null, 'result' => null );
+				// $active is always even by this point — the odd-player
+				// bye above already made sure of that — so this should
+				// never actually run. It's kept as a safety net rather
+				// than trusting that invariant to hold forever: if it
+				// ever does run, score it as a second bye rather than
+				// leaving a table that displays "Automatic win" (see
+				// TTRN_Rest::public_pairings()) without actually paying
+				// out the score to match.
+				$tables[]     = array( 'player1' => $p1['id'], 'player2' => null, 'result' => 'p1' );
+				$extra_byes[] = $p1['id'];
 				break;
 			}
 
@@ -117,16 +125,17 @@ class TTRN_Swiss {
 		}
 
 		if ( $bye_player_id ) {
-			foreach ( $players as &$p ) {
-				if ( $p['id'] === $bye_player_id ) {
-					$p['score'] += 1;
-					$p['byes']   = (int) ( $p['byes'] ?? 0 ) + 1;
-					break;
-				}
-			}
-			unset( $p );
-			$tables[] = array( 'player1' => $bye_player_id, 'player2' => null, 'result' => 'p1' );
+			$extra_byes[] = $bye_player_id;
+			$tables[]     = array( 'player1' => $bye_player_id, 'player2' => null, 'result' => 'p1' );
 		}
+
+		foreach ( $players as &$p ) {
+			if ( in_array( $p['id'], $extra_byes, true ) ) {
+				$p['score'] += 1;
+				$p['byes']   = (int) ( $p['byes'] ?? 0 ) + 1;
+			}
+		}
+		unset( $p );
 
 		return array( 'tables' => $tables, 'players' => $players );
 	}

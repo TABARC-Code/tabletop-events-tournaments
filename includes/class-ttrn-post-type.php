@@ -86,6 +86,7 @@ class TTRN_Post_Type {
 		<p>
 			<label for="ttrn_rounds_total"><strong><?php esc_html_e( 'Planned rounds', 'tabletop-events-tournaments' ); ?></strong></label><br>
 			<input type="number" min="1" name="ttrn_rounds_total" id="ttrn_rounds_total" value="<?php echo esc_attr( $rounds_total ); ?>">
+			<p class="description"><?php esc_html_e( 'Safe to raise once the tournament is under way if it runs long — it can\'t be dropped below however many rounds have already been generated.', 'tabletop-events-tournaments' ); ?></p>
 		</p>
 		<?php if ( $post->ID && get_post_status( $post->ID ) !== 'auto-draft' ) : ?>
 			<p>
@@ -111,13 +112,15 @@ class TTRN_Post_Type {
 		if ( isset( $_POST['ttrn_event_id'] ) ) {
 			update_post_meta( $post_id, '_ttrn_event_id', (int) $_POST['ttrn_event_id'] );
 		}
-		// Only settable before the tournament's started — once round 1
-		// has pairings, changing the planned total under a live event
-		// would leave standings/pairings referencing a round count that
-		// no longer matches, so the admin page's own "start" action is
-		// what fixes this from here on, not the meta box.
-		if ( isset( $_POST['ttrn_rounds_total'] ) && ! (int) get_post_meta( $post_id, '_ttrn_current_round', true ) ) {
-			update_post_meta( $post_id, '_ttrn_rounds_total', max( 1, (int) $_POST['ttrn_rounds_total'] ) );
+		// Can go up any time (an organiser running long and wanting one
+		// more round is a completely normal thing to want mid-event),
+		// but never below whatever round's already been generated —
+		// that would leave a "Generate Round N" button pointing past a
+		// total that no longer covers the rounds already played.
+		if ( isset( $_POST['ttrn_rounds_total'] ) ) {
+			$current_round = (int) get_post_meta( $post_id, '_ttrn_current_round', true );
+			$floor         = max( 1, $current_round );
+			update_post_meta( $post_id, '_ttrn_rounds_total', max( $floor, (int) $_POST['ttrn_rounds_total'] ) );
 		}
 	}
 }
