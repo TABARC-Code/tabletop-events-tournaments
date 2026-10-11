@@ -21,6 +21,19 @@ It's a deliberately simplified greedy Swiss pairer, not a full constraint solver
 
 Not yet wired into the core plugin's ranking-circuit tags (ITC/UKTC/etc.) — that's a natural next step once there's real usage to design against, rather than guessing at a scoring format nobody's asked for yet.
 
+## Installing
+
+Install and activate the core calendar first. Then either upload a zip via Plugins ▸ Add New, or drop the `tabletop-events-tournaments` folder into `wp-content/plugins/`. GitHub's "Download ZIP" names the folder `...-main`, which WordPress won't treat as the same plugin on update — run `scripts/pack-plugin.sh` to build a correctly named zip instead.
+
+## Other pieces of the set
+
+Every plugin here stands alone and only ever needs the [core calendar](https://github.com/TABARC-Code/Tabletop-Gaming-Events-Calendar) — none depend on each other. Take what's useful:
+
+- [Tabletop-Events-Discord-rsvp-Repo](https://github.com/TABARC-Code/Tabletop-Events-Discord-rsvp-Repo) — RSVP from a Discord button
+- [Tabletop-Events-Reviews](https://github.com/TABARC-Code/Tabletop-Events-Reviews) — RSVP-gated event and organiser reviews
+- [Tabletop-Events-Carpool](https://github.com/TABARC-Code/Tabletop-Events-Carpool) — Lift-share board per event
+- [tabletop-events-resources](https://github.com/TABARC-Code/tabletop-events-resources) — Terrain, tables and dice to borrow
+
 ## Licence
 
 GPL v2 or later.
